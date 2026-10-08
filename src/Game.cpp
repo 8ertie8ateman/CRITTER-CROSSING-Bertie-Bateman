@@ -16,6 +16,79 @@ Game::~Game()
 // We call this once after the game class is instantiated
 bool Game::init()
 {
+	//in_menu == true;
+	//menu_text.setString("Critter Crossing.");
+	//menu_text.setFont(font);
+	//menu_text.setCharacterSize(70);
+	//menu_text.setFillColor(sf::Color(255, 255, 255, 255));
+	//menu_text.setPosition(sf::Vector2f(window.getSize().x / 2, window.getSize().y / 2));
+
+	//play_option.setString("Play");
+	//play_option.setFont(font);
+	//play_option.setCharacterSize(30);
+	//play_option.setFillColor(sf::Color(255, 255, 255, 255));
+	//play_option.setPosition({ 500, 325 });
+
+	//quit_option.setString("Quit");
+	//quit_option.setFont(font);
+	//quit_option.setCharacterSize(30);
+	//quit_option.setFillColor(sf::Color(255, 255, 255, 255));
+	//quit_option.setPosition({ 500, 375 });
+
+	
+
+	int animal_index = rand() % 3;
+	int passport_index = rand() % 3;
+
+	if (!animals[0].loadFromFile("../Data/Images/Critter Crossing/elephant.png"))
+	{
+		std::cout << "Animal texture did not load \n";
+	}
+	if (!animals[1].loadFromFile("../Data/Images/Critter Crossing/moose.png"))
+	{
+		std::cout << "Animal texture did not load \n";
+	}
+
+	if (!animals[2].loadFromFile("../Data/Images/Critter Crossing/penguin.png"))
+	{
+		std::cout << "Animal texture did not load \n";
+	}
+	character = new sf::Sprite(animals[0]);
+
+	character->setTexture(animals[animal_index], true);
+	character->setScale({ 1.8, 1.8 });
+	character->setPosition(sf::Vector2f(window.getSize().x / 12, window.getSize().y / 12));
+	
+	if (!passports[0].loadFromFile("../Data/Images/Critter Crossing/elephant passport.png"))
+	{
+		std::cout << "Passport texture did not load \n";
+	}
+	if (!passports[1].loadFromFile("../Data/Images/Critter Crossing/moose passport.png"))
+	{
+		std::cout << "Passport texture did not load \n";
+	}
+
+	if (!passports[2].loadFromFile("../Data/Images/Critter Crossing/penguin passport.png"))
+	{
+		std::cout << "Passport texture did not load \n";
+	}
+
+	
+	passport = new sf::Sprite(passports[0]);
+
+	passport->setTexture(passports[passport_index]);
+	passport->setScale({ 0.6, 0.6 });
+	passport->setPosition(sf::Vector2f(window.getSize().x / 2, window.getSize().y / 3));
+
+
+	//if (animal_index == passport_index)
+	//{
+	//	should_accept = true;
+	//}
+	//else
+	//{
+	//	should_accept = false;
+	//}
 
   return true;
 }
@@ -30,7 +103,9 @@ void Game::update(float dt)
 // Runs after update, use it to tell the window what to draw this frame
 void Game::render()
 {
-
+	window.draw(*character);
+	window.draw(*passport);
+	
 }
 
 //Called by event polling when a MouseButtonPressed event is found
