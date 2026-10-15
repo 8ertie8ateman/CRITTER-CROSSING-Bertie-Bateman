@@ -5,35 +5,40 @@
 Game::Game(sf::RenderWindow& game_window)
   : window(game_window)
 {
-  srand(time(NULL)); //seeds random number generator with the current time
+  srand(time(NULL));
+  //seeds random number generator with the current time
 }
 
 Game::~Game()
 {
+	delete [] animals;
+	delete [] passports; 
+	delete character;
+	delete passport; 
 
 }
 //comment
 // We call this once after the game class is instantiated
 bool Game::init()
 {
-	//in_menu == true;
-	//menu_text.setString("Critter Crossing.");
-	//menu_text.setFont(font);
-	//menu_text.setCharacterSize(70);
-	//menu_text.setFillColor(sf::Color(255, 255, 255, 255));
-	//menu_text.setPosition(sf::Vector2f(window.getSize().x / 2, window.getSize().y / 2));
+	/*in_menu == true;
+	menu_text.setString("Critter Crossing.");
+	menu_text.setFont(font);
+	menu_text.setCharacterSize(70);
+	menu_text.setFillColor(sf::Color(255, 255, 255, 255));
+	menu_text.setPosition(sf::Vector2f(window.getSize().x / 2, window.getSize().y / 2));
 
-	//play_option.setString("Play");
-	//play_option.setFont(font);
-	//play_option.setCharacterSize(30);
-	//play_option.setFillColor(sf::Color(255, 255, 255, 255));
-	//play_option.setPosition({ 500, 325 });
+	play_option.setString("Play");
+	play_option.setFont(font);
+	play_option.setCharacterSize(30);
+	play_option.setFillColor(sf::Color(255, 255, 255, 255));
+	play_option.setPosition({ 500, 325 });
 
-	//quit_option.setString("Quit");
-	//quit_option.setFont(font);
-	//quit_option.setCharacterSize(30);
-	//quit_option.setFillColor(sf::Color(255, 255, 255, 255));
-	//quit_option.setPosition({ 500, 375 });
+	quit_option.setString("Quit");
+	quit_option.setFont(font);
+	quit_option.setCharacterSize(30);
+	quit_option.setFillColor(sf::Color(255, 255, 255, 255));
+	quit_option.setPosition({ 500, 375 });*/
 
 	
 
@@ -73,24 +78,42 @@ bool Game::init()
 		std::cout << "Passport texture did not load \n";
 	}
 
-	
+	//background 
+	if (!background_texture.loadFromFile("../Data/Images/WhackaMole Worksheet/background.png"))
+	{
+		std::cout << "Background texture did not load \n";
+	}
+	background.setTexture(background_texture);
+
 	passport = new sf::Sprite(passports[0]);
 
 	passport->setTexture(passports[passport_index]);
 	passport->setScale({ 0.6, 0.6 });
 	passport->setPosition(sf::Vector2f(window.getSize().x / 2, window.getSize().y / 3));
 
+	acceptButton = new sf::Sprite(acceptButton_Texture);
+	acceptButton->setScale({ 0.6, 0.6 });
+	acceptButton->setPosition(sf::Vector2f(window.getSize().x  *0.8f, window.getSize().y *0.4f ));
 
-	//if (animal_index == passport_index)
-	//{
-	//	should_accept = true;
-	//}
-	//else
-	//{
-	//	should_accept = false;
-	//}
+	rejectButton = new sf::Sprite(rejectButton_Texture);
+    rejectButton->setScale({ 0.6, 0.6 });
+	rejectButton->setPosition(sf::Vector2f(window.getSize().x * 0.8f, window.getSize().y * 0.5f));
+
+	if (animal_index == passport_index)
+	{
+		should_accept = true;
+	}
+	else
+	{
+		should_accept = false;
+	}
 
   return true;
+}
+
+void Game::newAnimal()
+{
+
 }
 
 // Update runs after event polling and before rendering
@@ -103,9 +126,12 @@ void Game::update(float dt)
 // Runs after update, use it to tell the window what to draw this frame
 void Game::render()
 {
+	window.draw(background);
 	window.draw(*character);
 	window.draw(*passport);
-	
+	window.draw(*acceptButton);
+	window.draw(*rejectButton);
+
 }
 
 //Called by event polling when a MouseButtonPressed event is found
@@ -154,5 +180,3 @@ void Game::keyReleased(const sf::Event::KeyReleased* event)
 	}
 
 }
-
-
