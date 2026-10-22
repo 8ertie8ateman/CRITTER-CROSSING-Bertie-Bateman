@@ -21,9 +21,10 @@ class Game
   /* Menu*/
 
  /* sf::Text score_text;*/
-  /*sf::Text menu_text;
-  sf::Text play_option;
-  sf::Text quit_option;*/
+  sf::Font font;
+  sf::Text* menu_text;
+  sf::Text* play_option;
+  sf::Text* quit_option;
 
   bool in_menu = true;
 

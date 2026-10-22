@@ -21,24 +21,32 @@ Game::~Game()
 // We call this once after the game class is instantiated
 bool Game::init()
 {
-	/*in_menu == true;
-	menu_text.setString("Critter Crossing.");
-	menu_text.setFont(font);
-	menu_text.setCharacterSize(70);
-	menu_text.setFillColor(sf::Color(255, 255, 255, 255));
-	menu_text.setPosition(sf::Vector2f(window.getSize().x / 2, window.getSize().y / 2));
+	if (!font.openFromFile("../Data/Fonts/OpenSans-Bold.ttf"))
+	{
+		std::cout << "font did not load \n";
+	}
 
-	play_option.setString("Play");
-	play_option.setFont(font);
-	play_option.setCharacterSize(30);
-	play_option.setFillColor(sf::Color(255, 255, 255, 255));
-	play_option.setPosition({ 500, 325 });
+	menu_text = new sf::Text(font);
+	in_menu == true;
+	menu_text->setString("Critter Crossing");
+	menu_text->setFont(font);
+	menu_text->setCharacterSize(50);
+	menu_text->setFillColor(sf::Color(255, 255, 255, 255));
+	menu_text->setPosition({ 350, 200 });
 
-	quit_option.setString("Quit");
-	quit_option.setFont(font);
-	quit_option.setCharacterSize(30);
-	quit_option.setFillColor(sf::Color(255, 255, 255, 255));
-	quit_option.setPosition({ 500, 375 });*/
+	play_option = new sf::Text(font);
+	play_option->setString("Play");
+	play_option->setFont(font);
+	play_option->setCharacterSize(30);
+	play_option->setFillColor(sf::Color(255, 255, 255, 255));
+	play_option->setPosition({ 500, 325 });
+
+	quit_option = new sf::Text(font);
+	quit_option->setString("Quit");
+	quit_option->setFont(font);
+	quit_option->setCharacterSize(30);
+	quit_option->setFillColor(sf::Color(255, 255, 255, 255));
+	quit_option->setPosition({ 500, 375 });
 
 	
 
@@ -83,7 +91,9 @@ bool Game::init()
 	{
 		std::cout << "Background texture did not load \n";
 	}
+
 	background.setTexture(background_texture);
+
 
 	passport = new sf::Sprite(passports[0]);
 
@@ -150,12 +160,21 @@ void Game::dragSprite(sf::Sprite* sprite)
 // Runs after update, use it to tell the window what to draw this frame
 void Game::render()
 {
-	window.draw(background);
-	window.draw(*character);
-	window.draw(*passport);
-	window.draw(*acceptButton);
-	window.draw(*rejectButton);
+	if (in_menu == false)
+	{
+		window.draw(background);
+		window.draw(*character);
+		window.draw(*passport);
+		window.draw(*acceptButton);
+		window.draw(*rejectButton);
 
+	}
+	else
+	{
+		window.draw(*menu_text);
+		window.draw(*play_option);
+		window.draw(*quit_option);
+	}
 	if (accepted == true)
 	{
 		window.draw(*acceptStamp);
@@ -207,6 +226,38 @@ void Game::mouseButtonReleased(const sf::Event::MouseButtonReleased* event)
 // Called by event polling when a KeyPressed event is found
 void Game::keyPressed(const sf::Event::KeyPressed* event)
 {
+	/*if (
+		(event.key.code == sf::Keyboard::Up) ||
+		(event.key.code == sf::Keyboard::Down))
+	{
+		play_selected = !play_selected;
+		if (play_selected)
+		{
+			play_option->setString("> Play <");
+			quit_option->setString("Quit");
+		}
+		else
+		{
+			play_option->setString("Play");
+			quit_option->setString("> Quit <");
+		}
+	}
+	else if (event.key.code == sf::Keyboard::Enter)
+	{
+		if (play_selected)
+		{
+			in_menu = false;
+		}
+		else
+		{
+			window.close();
+		}
+	}
+	if (event.key.code == sf::Keyboard::Escape)
+	{
+		in_menu = true;
+	}*/
+
 	// You can tell which button was pressed by the scancode to SFML's definitions of keyboard keys
 	if (event->scancode == sf::Keyboard::Scancode::W)
 	{
