@@ -99,6 +99,14 @@ bool Game::init()
     rejectButton->setScale({ 0.6, 0.6 });
 	rejectButton->setPosition(sf::Vector2f(window.getSize().x * 0.8f, window.getSize().y * 0.5f));
 
+	rejectStamp = new sf::Sprite(rejectStamp_Texture);
+	rejectStamp->setScale({ 0.6, 0.6 });
+	rejectStamp->setPosition(sf::Vector2f(passport->getPosition().x + 130, passport->getPosition().y + 130));
+
+	acceptStamp = new sf::Sprite(acceptStamp_Texture);
+	acceptStamp->setScale({ 0.75, 0.6 });
+	acceptStamp->setPosition(sf::Vector2f(passport->getPosition().x + 130, passport->getPosition().y + 130));
+
 	if (animal_index == passport_index)
 	{
 		should_accept = true;
@@ -121,6 +129,9 @@ void Game::newAnimal()
 void Game::update(float dt)
 {
 	dragSprite(dragged);
+	acceptStamp->setPosition(sf::Vector2f(passport->getPosition().x + 130, passport->getPosition().y + 130));
+	rejectStamp->setPosition(sf::Vector2f(passport->getPosition().x + 130, passport->getPosition().y + 130));
+
 }
 
 void Game::dragSprite(sf::Sprite* sprite)
@@ -132,6 +143,7 @@ void Game::dragSprite(sf::Sprite* sprite)
 
 		sf::Vector2f drag_position = mouse_positionf /*- drag_offset*/;
 		sprite->setPosition({ drag_position.x, drag_position.y });
+
 	}
 }
 
@@ -144,6 +156,14 @@ void Game::render()
 	window.draw(*acceptButton);
 	window.draw(*rejectButton);
 
+	if (accepted == true)
+	{
+		window.draw(*acceptStamp);
+	}
+	if (rejected == true)
+	{
+		window.draw(*rejectStamp);
+	}
 }
 
 //Called by event polling when a MouseButtonPressed event is found
@@ -161,6 +181,15 @@ void Game::mouseButtonPressed(const sf::Event::MouseButtonPressed* event)
 		if (passport->getGlobalBounds().contains(click))
 		{
 			dragged = passport;
+		}
+	
+		if (acceptButton->getGlobalBounds().contains(click))
+		{
+			accepted = true;
+		}
+		if (rejectButton->getGlobalBounds().contains(click))
+		{
+			rejected = true;
 		}
 	}
 }

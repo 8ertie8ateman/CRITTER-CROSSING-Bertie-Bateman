@@ -27,7 +27,8 @@ class Game
 
   bool in_menu = true;
 
-
+  bool accepted = false;
+  bool rejected = false;
 
   bool should_accept = false;
 
@@ -44,6 +45,12 @@ class Game
   sf::Sprite* rejectButton;
   sf::Texture rejectButton_Texture {"../Data/Images/Critter Crossing/reject button.png" };
   
+  sf::Sprite* acceptStamp;
+  sf::Texture acceptStamp_Texture{ "../Data/Images/Critter Crossing/accept.png" };
+  sf::Sprite* rejectStamp;
+  sf::Texture rejectStamp_Texture{ "../Data/Images/Critter Crossing/reject.png" };
+
+
   sf::Sprite* dragged = nullptr;
 
  private:
