@@ -17,7 +17,7 @@ class Game
   void mouseButtonReleased(const sf::Event::MouseButtonReleased* event);
   void keyPressed(const sf::Event::KeyPressed* event);
   void keyReleased(const sf::Event::KeyReleased* event);
-
+  void dragSprite(sf::Sprite* sprite);
   /* Menu*/
 
  /* sf::Text score_text;*/
@@ -44,7 +44,7 @@ class Game
   sf::Sprite* rejectButton;
   sf::Texture rejectButton_Texture {"../Data/Images/Critter Crossing/reject button.png" };
   
- 
+  sf::Sprite* dragged = nullptr;
 
  private:
   sf::RenderWindow& window;

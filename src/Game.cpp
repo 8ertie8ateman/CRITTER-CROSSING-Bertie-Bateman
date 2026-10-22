@@ -120,7 +120,19 @@ void Game::newAnimal()
 // use it for everything that needs to update between frames
 void Game::update(float dt)
 {
+	dragSprite(dragged);
+}
 
+void Game::dragSprite(sf::Sprite* sprite)
+{
+	if (sprite != nullptr)
+	{
+		sf::Vector2i mouse_position = sf::Mouse::getPosition(window);
+		sf::Vector2f mouse_positionf = static_cast<sf::Vector2f>(mouse_position);
+
+		sf::Vector2f drag_position = mouse_positionf /*- drag_offset*/;
+		sprite->setPosition({ drag_position.x, drag_position.y });
+	}
 }
 
 // Runs after update, use it to tell the window what to draw this frame
@@ -145,7 +157,11 @@ void Game::mouseButtonPressed(const sf::Event::MouseButtonPressed* event)
 	// You can tell which button was pressed by comparing it to SFML's definitions of mouse buttons
 	if (event->button == sf::Mouse::Button::Left)
 	{
-		//Left mouse button was pressed
+		sf::Vector2f click = static_cast<sf::Vector2f>(event->position);
+		if (passport->getGlobalBounds().contains(click))
+		{
+			dragged = passport;
+		}
 	}
 }
 
@@ -155,7 +171,7 @@ void Game::mouseButtonReleased(const sf::Event::MouseButtonReleased* event)
 	//Works the same as MouseButtonPressed
 	if (event->button == sf::Mouse::Button::Left)
 	{
-		//Left mouse button was released
+		dragged = nullptr;
 	}
 }
 
